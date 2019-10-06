@@ -1,8 +1,7 @@
 <template>
   <no-ssr>
-    <v-layout column justify-center align-center>
+    <v-layout justify-center>
       <v-flex xs12 sm8 md6>
-        <div>{{ this.saveMessage }}</div>
         <form>
           <v-text-field
             v-model="messageText"
@@ -12,45 +11,48 @@
           />
           <v-btn @click="handleClick" block class="font-weight-bold">投稿する</v-btn>
         </form>
+
+        <div>{{ this.saveMessage }}</div>
       </v-flex>
     </v-layout>
   </no-ssr>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      messageText: '',
-      saveMessage: ''
-    }
-  },
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator'
+
+// ref: https://qiita.com/JunSuzukiJapan/items/134f3a2b342c4804b498
+declare function require(x: string): any
+
+@Component
+export default class Index extends Vue {
+  messageText = ''
+  saveMessage = ''
+  messageChannel: any
+
   created() {
-    if (process.client) {
+    if (typeof window !== 'undefined') {
       const ActionCable = require('actioncable')
       const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
 
       this.messageChannel = cable.subscriptions.create('PostChannel', {
-        received: (data) => {
+        received: (data: any) => {
           this.saveMessage = data
-          // this.$store.commit('addMessage', data)
         }
       })
     }
-  },
-  methods: {
-    handleClick: function() {
-      //ActionCable PostChannelにおけるpostメソッドを実行する
-      this.messageChannel.perform('post', {
-        message: this.messageText
-      })
-      // console.log(this.$store.state.messages);
-      //メッセージ追加後にテキストボックスを空にする
-      this.messageText = ''
-    }
+  }
+
+  handleClick() {
+    this.messageChannel.perform('post', {
+      message: this.messageText
+    })
+    // console.log(this.$store.state.messages);
+    this.messageText = ''
   }
 }
 </script>
+
 
 <style lang="scss" module>
 </style>
