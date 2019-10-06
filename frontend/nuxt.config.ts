@@ -3,7 +3,7 @@ require('dotenv').config()
 const { API_SERVER_URL } = process.env
 
 module.exports = {
-  mode: 'spa',
+  mode: 'universal',
   /*
    ** Headers of the page
    */

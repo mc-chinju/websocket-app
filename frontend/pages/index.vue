@@ -18,8 +18,6 @@
 </template>
 
 <script>
-import ActionCable from 'actioncable'
-
 export default {
   data() {
     return {
@@ -28,14 +26,17 @@ export default {
     }
   },
   created() {
-    const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
+    if (process.client) {
+      const ActionCable = require('actioncable')
+      const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
 
-    this.messageChannel = cable.subscriptions.create('PostChannel', {
-      received: (data) => {
-        this.saveMessage = data
-        // this.$store.commit('addMessage', data)
-      }
-    })
+      this.messageChannel = cable.subscriptions.create('PostChannel', {
+        received: (data) => {
+          this.saveMessage = data
+          // this.$store.commit('addMessage', data)
+        }
+      })
+    }
   },
   methods: {
     handleClick: function() {
