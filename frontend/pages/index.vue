@@ -1,21 +1,19 @@
 <template>
-  <no-ssr>
-    <v-layout justify-center>
-      <v-flex xs12 sm8 md6>
-        <form>
-          <v-text-field
-            v-model="messageText"
-            label="テキスト"
-            data-vv-name="messageText"
-            placeholder="何かテキストを入力してください"
-          />
-          <v-btn @click="handleClick" block class="font-weight-bold">投稿する</v-btn>
-        </form>
+  <v-layout justify-center>
+    <v-flex xs12 sm8 md6>
+      <form>
+        <v-text-field
+          v-model="messageText"
+          label="テキスト"
+          data-vv-name="messageText"
+          placeholder="何かテキストを入力してください"
+        />
+        <v-btn @click="handleClick" block class="font-weight-bold">投稿する</v-btn>
+      </form>
 
-        <div>{{ this.$store.state.message.messages }}</div>
-      </v-flex>
-    </v-layout>
-  </no-ssr>
+      <div>{{ this.$store.state.message.messages }}</div>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script lang="ts">
