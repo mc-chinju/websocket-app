@@ -12,7 +12,7 @@
           <v-btn @click="handleClick" block class="font-weight-bold">投稿する</v-btn>
         </form>
 
-        <div>{{ this.saveMessage }}</div>
+        <div>{{ this.$store.state.message.messages }}</div>
       </v-flex>
     </v-layout>
   </no-ssr>
@@ -20,6 +20,8 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
+import { mapGetters } from 'vuex'
+import { Context } from '@nuxt/types'
 
 // ref: https://qiita.com/JunSuzukiJapan/items/134f3a2b342c4804b498
 declare function require(x: string): any
@@ -27,8 +29,8 @@ declare function require(x: string): any
 @Component
 export default class Index extends Vue {
   messageText = ''
-  saveMessage = ''
   messageChannel: any
+  messages: String[] = []
 
   created() {
     if (typeof window !== 'undefined') {
@@ -37,7 +39,7 @@ export default class Index extends Vue {
 
       this.messageChannel = cable.subscriptions.create('PostChannel', {
         received: (data: any) => {
-          this.saveMessage = data
+          this.$store.dispatch('message/add', data)
         }
       })
     }
@@ -47,7 +49,6 @@ export default class Index extends Vue {
     this.messageChannel.perform('post', {
       message: this.messageText
     })
-    // console.log(this.$store.state.messages);
     this.messageText = ''
   }
 }
