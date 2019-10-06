@@ -3,9 +3,9 @@
     <v-flex xs12 sm8 md6>
       <form>
         <v-text-field
-          v-model="messageText"
+          v-model="message"
           label="テキスト"
-          data-vv-name="messageText"
+          data-vv-name="message"
           placeholder="何かテキストを入力してください"
         />
         <v-btn @click="handleClick" block class="font-weight-bold">投稿する</v-btn>
@@ -18,17 +18,14 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import { mapGetters } from 'vuex'
-import { Context } from '@nuxt/types'
 
 // ref: https://qiita.com/JunSuzukiJapan/items/134f3a2b342c4804b498
 declare function require(x: string): any
 
 @Component
 export default class Index extends Vue {
-  messageText = ''
+  message = ''
   messageChannel: any
-  messages: String[] = []
 
   created() {
     if (typeof window !== 'undefined') {
@@ -45,9 +42,9 @@ export default class Index extends Vue {
 
   handleClick() {
     this.messageChannel.perform('post', {
-      message: this.messageText
+      message: this.message
     })
-    this.messageText = ''
+    this.message = ''
   }
 }
 </script>
