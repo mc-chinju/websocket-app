@@ -1,30 +1,30 @@
-const colors = require("vuetify/es5/util/colors").default;
-require("dotenv").config();
-const { API_SERVER_URL } = process.env;
+const colors = require('vuetify/es5/util/colors').default
+require('dotenv').config()
+const { API_SERVER_URL } = process.env
 
 module.exports = {
-  mode: "universal",
+  mode: 'spa',
   /*
    ** Headers of the page
    */
   head: {
-    titleTemplate: "%s - " + process.env.npm_package_name,
-    title: process.env.npm_package_name || "",
+    titleTemplate: '%s - ' + process.env.npm_package_name,
+    title: process.env.npm_package_name || '',
     meta: [
-      { charset: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
-        hid: "description",
-        name: "description",
-        content: process.env.npm_package_description || ""
+        hid: 'description',
+        name: 'description',
+        content: process.env.npm_package_description || ''
       }
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: "#fff" },
+  loading: { color: '#fff' },
   /*
    ** Global CSS
    */
@@ -38,29 +38,29 @@ module.exports = {
    */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
-    "@nuxtjs/eslint-module",
-    "@nuxtjs/vuetify",
-    "@nuxt/typescript-build"
+    '@nuxtjs/eslint-module',
+    '@nuxtjs/vuetify',
+    '@nuxt/typescript-build'
   ],
   /*
    ** Nuxt.js modules
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    "@nuxtjs/axios",
-    "@nuxtjs/pwa"
+    '@nuxtjs/axios',
+    '@nuxtjs/pwa'
   ],
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: { baseURL: API_SERVER_URL || "http://localhost:3000" },
+  axios: { baseURL: API_SERVER_URL || 'http://localhost:3000' },
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
    */
   vuetify: {
-    customVariables: ["~/assets/variables.scss"]
+    customVariables: ['~/assets/variables.scss']
   },
   /*
    ** Build configuration
@@ -71,4 +71,4 @@ module.exports = {
      */
     // extend(config, ctx) {}
   }
-};
+}
